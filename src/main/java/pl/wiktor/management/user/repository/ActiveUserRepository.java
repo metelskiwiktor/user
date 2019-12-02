@@ -2,34 +2,24 @@ package pl.wiktor.management.user.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import pl.wiktor.management.user.entity.Account;
+import pl.wiktor.management.user.entity.ActiveAccount;
 import pl.wiktor.management.user.entity.Token;
 
-import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Repository
 public class ActiveUserRepository {
-    private Map<Account, Token> activeUsers;
+    private EntityManager entityManager;
 
-    public ActiveUserRepository(Map<Account, Token> activeUsers) {
-        this.activeUsers = activeUsers;
+    @Autowired
+    public ActiveUserRepository(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
-    public Account getUserByToken(String token){
-        return activeUsers.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().getUuid().toString().equals(token))
-                .map(Map.Entry::getKey)
-                .findFirst()
-                .get();
-    }
-
-    public Map<Account, Token> getActiveUsers() {
-        System.out.println(activeUsers.keySet());
-        return activeUsers;
-    }
-
-    public void addUser(Account account, Token token) {
-        activeUsers.put(account, token);
+    @Transactional
+    public void login(String login, UUID token){
+        entityManager.merge(new ActiveAccount(login, token));
     }
 }
