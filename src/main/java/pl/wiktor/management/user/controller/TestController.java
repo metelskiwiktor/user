@@ -26,7 +26,7 @@ public class TestController {
 
     @PostMapping(value = register, consumes = "application/json")
     public boolean register(@RequestBody Account account) {
-        
+
         return accountService.register(account);
     }
 
