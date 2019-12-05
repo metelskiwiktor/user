@@ -1,6 +1,7 @@
 package pl.wiktor.management.user.helper;
 
 import pl.wiktor.management.user.entity.Account;
+import pl.wiktor.management.user.entity.ActiveAccount;
 import pl.wiktor.management.user.entity.enums.TableSearcher;
 
 import javax.persistence.EntityManager;
@@ -25,8 +26,8 @@ public class QueryHelper {
         return accounts > 0;
     }
 
-    public Account getAccountByLogin(String login, String fromTable){
-        return entityManager.createQuery("SELECT  c FROM " + fromTable + " c WHERE c.login LIKE :login", Account.class)
+    public Account getAccountByLogin(String login){
+        return entityManager.createQuery("SELECT  c FROM Account c WHERE c.login LIKE :login", Account.class)
                 .setParameter("login", login)
                 .getSingleResult();
     }
@@ -43,5 +44,14 @@ public class QueryHelper {
                 .setParameter("password", password)
                 .getResultList();
         return accounts.size() > 0;
+    }
+
+    public Account getAccountByToken(String token){
+        String login = entityManager.createQuery("SELECT c FROM ActiveAccount c WHERE c.token LIKE :token", ActiveAccount.class)
+                .setParameter("token", token)
+                .getSingleResult()
+                .getLogin();
+
+        return getAccountByLogin(login);
     }
 }

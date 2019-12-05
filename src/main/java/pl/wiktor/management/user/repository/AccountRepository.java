@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.wiktor.management.user.entity.Account;
 import pl.wiktor.management.user.entity.enums.TableSearcher;
-import pl.wiktor.management.user.exception.AccountException;
+import pl.wiktor.management.user.exception.AccountLoginException;
 import pl.wiktor.management.user.helper.QueryHelper;
 
 import javax.persistence.EntityManager;
@@ -22,13 +22,20 @@ public class AccountRepository {
     }
 
     @Transactional
-    public void addAccount(Account account) throws AccountException {
+    public void addAccount(Account account) throws AccountLoginException {
         boolean isAlreadyRegisterAccount = queryHelper.isAccountInDb(TableSearcher.AccountByLogin, account.getLogin());
 
         if(isAlreadyRegisterAccount){
-            throw new AccountException("Account already registered");
+            throw new AccountLoginException("Account already registered");
         }
 
+        entityManager.merge(account);
+    }
+
+    @Transactional
+    public void changePassword(String token, String newPassword){
+        final Account account = queryHelper.getAccountByToken(token);
+        account.setPassword(newPassword);
         entityManager.merge(account);
     }
 
@@ -39,4 +46,5 @@ public class AccountRepository {
     public boolean isLoginInDb(String login){
         return queryHelper.isAccountInDb(TableSearcher.AccountByLogin, login);
     }
+
 }

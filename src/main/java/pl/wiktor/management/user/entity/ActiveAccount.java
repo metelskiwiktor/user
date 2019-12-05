@@ -7,9 +7,6 @@ import java.util.UUID;
 @Table(name = "active_accounts")
 public class ActiveAccount {
 
-//    @Id
-//    @GeneratedValue
-//    private int id;
     @Id
     private String login;
     @Column
@@ -21,5 +18,13 @@ public class ActiveAccount {
     public ActiveAccount(String login, String token){
         this.login = login;
         this.token = token;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getToken() {
+        return token;
     }
 }
