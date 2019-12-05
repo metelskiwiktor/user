@@ -38,17 +38,18 @@ public class ActiveUserService {
         }
     }
 
-    public boolean login(Account account, UUID token) {
+    public String login(Account account) {
+        String token = UUID.randomUUID().toString();
         try {
             loginIsInDb(account.getLogin());
             loginAndPasswordCorrect(account);
             activeUserRepository.login(account.getLogin(), token);
             logger.info("Account successful logged in");
-            return true;
+            return token;
         } catch (AccountException | AccountPasswordException | AccountLoginException e) {
             logger.error(e.getMessage());
         }
-        return false;
+        return null;
     }
 
     public void logout(String token){

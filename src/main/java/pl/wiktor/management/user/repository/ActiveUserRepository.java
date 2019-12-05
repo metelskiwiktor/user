@@ -24,12 +24,12 @@ public class ActiveUserRepository {
     }
 
     @Transactional
-    public void login(String login, UUID token) throws AccountException {
+    public void login(String login, String token) throws AccountException {
         boolean isUserLoggedIn = queryHelper.isAccountInDb(TableSearcher.ActiveAccountByLogin, login);
         if(isUserLoggedIn){
             throw new AccountException("User already logged in");
         }
-        entityManager.merge(new ActiveAccount(login, token.toString()));
+        entityManager.merge(new ActiveAccount(login, token));
     }
 
     @Transactional

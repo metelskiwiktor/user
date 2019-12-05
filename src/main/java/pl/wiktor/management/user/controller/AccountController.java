@@ -31,14 +31,8 @@ public class AccountController {
     }
 
     @PostMapping(value = login, consumes = "application/json")
-    public UUID login(@RequestBody Account account){
-        UUID token = UUID.randomUUID();
-        // TODO: 05.12.2019 It should be in service
-        if(activeUserService.login(account, token)){
-            return token;
-        } else {
-            return null;
-        }
+    public String login(@RequestBody Account account){
+        return activeUserService.login(account);
     }
 
     @GetMapping(value = account+"/logout")
