@@ -7,10 +7,10 @@ import java.util.UUID;
 @Table(name = "active_accounts")
 public class ActiveAccount {
 
+//    @Id
+//    @GeneratedValue
+//    private int id;
     @Id
-    @GeneratedValue
-    private int id;
-    @Column
     private String login;
     @Column
     private String token;

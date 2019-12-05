@@ -32,7 +32,7 @@ public class QueryHelper {
 
     public void deleteAccountFromActiveAccount(String token){
         entityManager.createQuery("DELETE FROM ActiveAccount c WHERE c.token LIKE :token")
-                .setParameter("token", "d292fe00-0ed2-490c-aa96-1fb6f99ff753")
+                .setParameter("token", token)
                 .executeUpdate();
     }
 }
