@@ -4,8 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.wiktor.management.user.entity.Account;
 import pl.wiktor.management.user.entity.enums.TableSearcher;
 import pl.wiktor.management.user.exception.AccountException;
+import pl.wiktor.management.user.exception.AccountPasswordException;
+import pl.wiktor.management.user.repository.AccountRepository;
 import pl.wiktor.management.user.repository.ActiveUserRepository;
 
 import java.util.UUID;
@@ -13,23 +16,34 @@ import java.util.UUID;
 @Service
 public class ActiveUserService {
     private ActiveUserRepository activeUserRepository;
+    private AccountRepository accountRepository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public ActiveUserService(ActiveUserRepository activeUserRepository) {
+    public ActiveUserService(ActiveUserRepository activeUserRepository, AccountRepository accountRepository) {
         this.activeUserRepository = activeUserRepository;
+        this.accountRepository = accountRepository;
     }
 
 
-    public boolean login(String login, UUID token) {
+    private void loginAndPasswordCorrect(Account account) throws AccountPasswordException{
+        if( !accountRepository.isAccountExistWithPassword(account.getLogin(), account.getPassword()) ){
+            throw new AccountPasswordException("Password doesn't match");
+        }
+    }
+
+    public boolean login(Account account, UUID token) {
         try {
-            activeUserRepository.login(login, token);
+            loginAndPasswordCorrect(account);
+            activeUserRepository.login(account.getLogin(), token);
             logger.info("Account successful logged in");
             return true;
         } catch (AccountException e) {
             logger.error("Account already logged in");
-            return false;
+        } catch (AccountPasswordException e){
+            logger.error("Password doesn't match");
         }
+        return false;
     }
 
     public void logout(String token){

@@ -4,6 +4,7 @@ import pl.wiktor.management.user.entity.Account;
 import pl.wiktor.management.user.entity.enums.TableSearcher;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 import java.util.UUID;
 
 public class QueryHelper {
@@ -34,5 +35,13 @@ public class QueryHelper {
         entityManager.createQuery("DELETE FROM ActiveAccount c WHERE c.token LIKE :token")
                 .setParameter("token", token)
                 .executeUpdate();
+    }
+
+    public boolean isAccountExistWithPassword(String login, String password) {
+        final List<Account> accounts = entityManager.createQuery("SELECT c FROM Account c WHERE c.login LIKE :login AND c.password LIKE :password", Account.class)
+                .setParameter("login", login)
+                .setParameter("password", password)
+                .getResultList();
+        return accounts.size() > 0;
     }
 }

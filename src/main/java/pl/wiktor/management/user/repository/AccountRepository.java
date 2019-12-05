@@ -31,4 +31,12 @@ public class AccountRepository {
 
         entityManager.merge(account);
     }
+
+    public boolean isUserExist(String login){
+        return queryHelper.isAccountInDb(TableSearcher.AccountByLogin, login);
+    }
+
+    public boolean isAccountExistWithPassword(String login, String password){
+        return queryHelper.isAccountExistWithPassword(login, password);
+    }
 }

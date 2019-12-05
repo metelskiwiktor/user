@@ -45,4 +45,8 @@ public class ActiveUserRepository {
     public boolean isAccountLoggedIn(TableSearcher tableSearcher, String token){
         return queryHelper.isAccountInDb(tableSearcher, token);
     }
+
+    public boolean isAccountExist(Account account) {
+        return queryHelper.getAccountByLogin(account.getLogin(), "Account") == account;
+    }
 }

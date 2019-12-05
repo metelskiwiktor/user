@@ -30,12 +30,12 @@ public class AccountController {
         return accountService.register(account);
     }
 
-    // TODO: 05.12.2019 Check if the password is correct while logging
+    // TODO: 05.12.2019 Check if login is in db 
     @PostMapping(value = login, consumes = "application/json")
     public UUID login(@RequestBody Account account){
         UUID token = UUID.randomUUID();
         // TODO: 05.12.2019 It should be in service
-        if(activeUserService.login(account.getLogin(), token)){
+        if(activeUserService.login(account, token)){
             return token;
         } else {
             return null;
