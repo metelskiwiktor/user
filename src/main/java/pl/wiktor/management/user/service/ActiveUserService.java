@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.wiktor.management.user.entity.Account;
+import pl.wiktor.management.user.entity.enums.TableSearcher;
 import pl.wiktor.management.user.exception.AccountException;
 import pl.wiktor.management.user.repository.ActiveUserRepository;
 
@@ -33,7 +33,7 @@ public class ActiveUserService {
     }
 
     public void logout(String token){
-        if(activeUserRepository.isAccountLoggedInByToken(token)){
+        if(activeUserRepository.isAccountLoggedIn(TableSearcher.ActiveAccountByToken, token)){
             activeUserRepository.logout(token);
             logger.info("Account logged out");
         } else {

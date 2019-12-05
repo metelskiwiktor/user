@@ -3,6 +3,7 @@ package pl.wiktor.management.user.repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.wiktor.management.user.entity.Account;
+import pl.wiktor.management.user.entity.enums.TableSearcher;
 import pl.wiktor.management.user.exception.AccountException;
 import pl.wiktor.management.user.helper.QueryHelper;
 
@@ -22,7 +23,7 @@ public class AccountRepository {
 
     @Transactional
     public void addAccount(Account account) throws AccountException {
-        boolean isAlreadyRegisterAccount = queryHelper.isAccountInDb(Account.class.getSimpleName(), account.getLogin());
+        boolean isAlreadyRegisterAccount = queryHelper.isAccountInDb(TableSearcher.AccountByLogin, account.getLogin());
 
         if(isAlreadyRegisterAccount){
             throw new AccountException("Account already registered");

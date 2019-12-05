@@ -41,7 +41,6 @@ public class AccountController {
         }
     }
 
-    // TODO: 05.12.2019 repair user logout, it doesnt removes from db at all
     @GetMapping(value = account+"/logout")
     public void logout(@RequestHeader(value = "Token") String token){
         activeUserService.logout(token);

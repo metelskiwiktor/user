@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.wiktor.management.user.entity.Account;
 import pl.wiktor.management.user.entity.ActiveAccount;
+import pl.wiktor.management.user.entity.enums.TableSearcher;
 import pl.wiktor.management.user.exception.AccountException;
 import pl.wiktor.management.user.helper.QueryHelper;
 
@@ -24,7 +25,7 @@ public class ActiveUserRepository {
 
     @Transactional
     public void login(String login, UUID token) throws AccountException {
-        boolean isUserLoggedIn = queryHelper.isAccountInDb(ActiveAccount.class.getSimpleName(), login);
+        boolean isUserLoggedIn = queryHelper.isAccountInDb(TableSearcher.ActiveAccountByLogin, login);
         if(isUserLoggedIn){
             throw new AccountException("User already logged in");
         }
@@ -34,17 +35,14 @@ public class ActiveUserRepository {
     @Transactional
     public void logout(String token){
         queryHelper.deleteAccountFromActiveAccount(token);
+        entityManager.flush();
     }
 
     public Account getAccountByLogin(String login){
         return queryHelper.getAccountByLogin(login, Account.class.getSimpleName());
     }
 
-    public boolean isAccountLoggedInByLogin(String login){
-        return queryHelper.isAccountInDb(ActiveAccount.class.getSimpleName(),login);
-    }
-
-    public boolean isAccountLoggedInByToken(String token){
-        return queryHelper.isAccountInDbByToken(ActiveAccount.class.getSimpleName(), token);
+    public boolean isAccountLoggedIn(TableSearcher tableSearcher, String token){
+        return queryHelper.isAccountInDb(tableSearcher, token);
     }
 }
