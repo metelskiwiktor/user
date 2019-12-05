@@ -13,12 +13,12 @@ public class ActiveAccount {
     @Column
     private String login;
     @Column
-    private UUID token;
+    private String token;
 
     public ActiveAccount() {
     }
 
-    public ActiveAccount(String login, UUID token){
+    public ActiveAccount(String login, String token){
         this.login = login;
         this.token = token;
     }
