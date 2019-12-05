@@ -1,58 +1,50 @@
 package pl.wiktor.management.user.repository;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import pl.wiktor.management.user.entity.Account;
-import pl.wiktor.management.user.exception.AccountException;
+import pl.wiktor.management.user.entity.enums.TableSearcher;
+import pl.wiktor.management.user.exception.AccountLoginException;
+import pl.wiktor.management.user.helper.QueryHelper;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-//import java.util.logging.Logger;
 
 @Repository
 public class AccountRepository {
     private EntityManager entityManager;
+    private QueryHelper queryHelper;
 
     @Autowired
     public AccountRepository(EntityManager entityManager) {
         this.entityManager = entityManager;
+        this.queryHelper = new QueryHelper(entityManager);
     }
 
     @Transactional
-    public void addAccount(Account account) throws AccountException {
-        int accounts = entityManager.createQuery("SELECT c FROM Account c WHERE c.login LIKE :login ")
-                .setParameter("login", account.getLogin())
-                .getResultList()
-                .size();
+    public void addAccount(Account account) throws AccountLoginException {
+        boolean isAlreadyRegisterAccount = queryHelper.isAccountInDb(TableSearcher.AccountByLogin, account.getLogin());
 
-        if(accounts > 0){
-            throw new AccountException("Account already registered");
+        if(isAlreadyRegisterAccount){
+            throw new AccountLoginException("Account already registered");
         }
 
         entityManager.merge(account);
     }
 
     @Transactional
-    public void deleteAll(){
-        entityManager.clear();
+    public void changePassword(String token, String newPassword){
+        final Account account = queryHelper.getAccountByToken(token);
+        account.setPassword(newPassword);
+        entityManager.merge(account);
     }
+
+    public boolean isAccountExistWithPassword(String login, String password){
+        return queryHelper.isAccountExistWithPassword(login, password);
+    }
+
+    public boolean isLoginInDb(String login){
+        return queryHelper.isAccountInDb(TableSearcher.AccountByLogin, login);
+    }
+
 }
-//    public Account getUserByToken(String token){
-//        return activeUsers.entrySet()
-//                .stream()
-//                .filter(entry -> entry.getValue().getUuid().toString().equals(token))
-//                .map(Map.Entry::getKey)
-//                .findFirst()
-//                .get();
-//    }
-//
-//    public Map<Account, Token> getActiveUsers() {
-//        System.out.println(activeUsers.keySet());
-//        return activeUsers;
-//    }
-//
-//    public void addUser(Account account, Token token) {
-//        activeUsers.put(account, token);
-//    }
