@@ -2,34 +2,43 @@ package pl.wiktor.management.user.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import pl.wiktor.management.user.entity.Account;
-import pl.wiktor.management.user.entity.Token;
+import pl.wiktor.management.user.entity.ActiveAccount;
+import pl.wiktor.management.user.entity.enums.TableSearcher;
+import pl.wiktor.management.user.exception.AccountException;
+import pl.wiktor.management.user.exception.AccountLoginException;
+import pl.wiktor.management.user.helper.QueryHelper;
 
-import java.util.Map;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 
 @Repository
 public class ActiveUserRepository {
-    private Map<Account, Token> activeUsers;
+    private EntityManager entityManager;
+    private QueryHelper queryHelper;
 
-    public ActiveUserRepository(Map<Account, Token> activeUsers) {
-        this.activeUsers = activeUsers;
+    @Autowired
+    public ActiveUserRepository(EntityManager entityManager) {
+        this.entityManager = entityManager;
+        this.queryHelper = new QueryHelper(entityManager);
     }
 
-    public Account getUserByToken(String token){
-        return activeUsers.entrySet()
-                .stream()
-                .filter(entry -> entry.getValue().getUuid().toString().equals(token))
-                .map(Map.Entry::getKey)
-                .findFirst()
-                .get();
+    @Transactional
+    public void login(String login, String token) throws AccountLoginException {
+        boolean isUserLoggedIn = queryHelper.isAccountInDb(TableSearcher.ActiveAccountByLogin, login);
+        if(isUserLoggedIn){
+            throw new AccountLoginException("User already logged in");
+        }
+        entityManager.merge(new ActiveAccount(login, token));
     }
 
-    public Map<Account, Token> getActiveUsers() {
-        System.out.println(activeUsers.keySet());
-        return activeUsers;
+    @Transactional
+    public void logout(String token){
+        queryHelper.deleteAccountFromActiveAccount(token);
+        entityManager.flush();
     }
 
-    public void addUser(Account account, Token token) {
-        activeUsers.put(account, token);
+    public boolean isAccountLoggedIn(TableSearcher tableSearcher, String fieldValue){
+        return queryHelper.isAccountInDb(tableSearcher, fieldValue);
     }
+
 }
