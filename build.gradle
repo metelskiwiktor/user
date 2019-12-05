@@ -21,6 +21,7 @@ dependencies {
 	}
 	compile 'com.h2database:h2:1.4.199'
 	compile 'org.postgresql:postgresql:42.2.8.jre6'
+	compile 'org.mockito:mockito-junit-jupiter:3.0.0'
 }
 
 test {

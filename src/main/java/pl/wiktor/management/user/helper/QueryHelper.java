@@ -1,5 +1,7 @@
 package pl.wiktor.management.user.helper;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pl.wiktor.management.user.entity.Account;
 import pl.wiktor.management.user.entity.ActiveAccount;
 import pl.wiktor.management.user.entity.enums.TableSearcher;
@@ -8,8 +10,9 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.UUID;
 
+@Component
 public class QueryHelper {
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
 
     public QueryHelper(EntityManager entityManager) {
         this.entityManager = entityManager;

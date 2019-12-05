@@ -16,9 +16,9 @@ public class AccountRepository {
     private QueryHelper queryHelper;
 
     @Autowired
-    public AccountRepository(EntityManager entityManager) {
+    public AccountRepository(EntityManager entityManager, QueryHelper queryHelper) {
         this.entityManager = entityManager;
-        this.queryHelper = new QueryHelper(entityManager);
+        this.queryHelper = queryHelper;
     }
 
     @Transactional
