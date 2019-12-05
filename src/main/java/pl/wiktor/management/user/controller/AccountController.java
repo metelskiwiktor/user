@@ -30,7 +30,6 @@ public class AccountController {
         return accountService.register(account);
     }
 
-    // TODO: 05.12.2019 Check if login is in db 
     @PostMapping(value = login, consumes = "application/json")
     public UUID login(@RequestBody Account account){
         UUID token = UUID.randomUUID();

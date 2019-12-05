@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pl.wiktor.management.user.entity.Account;
 import pl.wiktor.management.user.entity.enums.TableSearcher;
 import pl.wiktor.management.user.exception.AccountException;
+import pl.wiktor.management.user.exception.AccountLoginException;
 import pl.wiktor.management.user.exception.AccountPasswordException;
 import pl.wiktor.management.user.repository.AccountRepository;
 import pl.wiktor.management.user.repository.ActiveUserRepository;
@@ -25,6 +26,11 @@ public class ActiveUserService {
         this.accountRepository = accountRepository;
     }
 
+    private void loginIsInDb(String login) throws AccountLoginException {
+        if( !accountRepository.isLoginInDb(login)){
+            throw new AccountLoginException("Account isn't registered");
+        }
+    }
 
     private void loginAndPasswordCorrect(Account account) throws AccountPasswordException{
         if( !accountRepository.isAccountExistWithPassword(account.getLogin(), account.getPassword()) ){
@@ -34,14 +40,13 @@ public class ActiveUserService {
 
     public boolean login(Account account, UUID token) {
         try {
+            loginIsInDb(account.getLogin());
             loginAndPasswordCorrect(account);
             activeUserRepository.login(account.getLogin(), token);
             logger.info("Account successful logged in");
             return true;
-        } catch (AccountException e) {
-            logger.error("Account already logged in");
-        } catch (AccountPasswordException e){
-            logger.error("Password doesn't match");
+        } catch (AccountException | AccountPasswordException | AccountLoginException e) {
+            logger.error(e.getMessage());
         }
         return false;
     }
