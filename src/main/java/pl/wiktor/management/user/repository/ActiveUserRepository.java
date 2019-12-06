@@ -2,9 +2,8 @@ package pl.wiktor.management.user.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import pl.wiktor.management.user.entity.ActiveAccount;
-import pl.wiktor.management.user.entity.enums.TableSearcher;
-import pl.wiktor.management.user.exception.AccountException;
+import pl.wiktor.management.user.model.entity.ActiveAccount;
+import pl.wiktor.management.user.model.enums.TableSearcher;
 import pl.wiktor.management.user.exception.AccountLoginException;
 import pl.wiktor.management.user.helper.QueryHelper;
 

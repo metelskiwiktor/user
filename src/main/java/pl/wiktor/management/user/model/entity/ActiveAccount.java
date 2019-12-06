@@ -1,7 +1,6 @@
-package pl.wiktor.management.user.entity;
+package pl.wiktor.management.user.model.entity;
 
 import javax.persistence.*;
-import java.util.UUID;
 
 @Entity
 @Table(name = "active_accounts")

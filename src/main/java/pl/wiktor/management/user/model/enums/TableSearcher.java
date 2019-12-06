@@ -1,7 +1,7 @@
-package pl.wiktor.management.user.entity.enums;
+package pl.wiktor.management.user.model.enums;
 
-import pl.wiktor.management.user.entity.Account;
-import pl.wiktor.management.user.entity.ActiveAccount;
+import pl.wiktor.management.user.model.entity.Account;
+import pl.wiktor.management.user.model.entity.ActiveAccount;
 
 public enum TableSearcher {
     AccountByLogin(Account.class.getSimpleName(), "login"),

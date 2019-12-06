@@ -2,17 +2,15 @@ package pl.wiktor.management.user.repository;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import pl.wiktor.management.user.entity.Account;
-import pl.wiktor.management.user.entity.enums.TableSearcher;
 import pl.wiktor.management.user.exception.AccountLoginException;
 import pl.wiktor.management.user.helper.QueryHelper;
+import pl.wiktor.management.user.model.entity.Account;
+import pl.wiktor.management.user.model.enums.TableSearcher;
 
 import javax.persistence.EntityManager;
 
@@ -32,9 +30,6 @@ public class AccountRepositoryTest {
     private AccountRepository accountRepository;
 
     private Account account;
-    //addaccount - done
-    //changepassword - done
-
 
     @Before
     public void setUp() {
@@ -65,7 +60,18 @@ public class AccountRepositoryTest {
     }
 
 
+    @Test
+    public void isAccountExistWithPassword() {
+        when(queryHelper.isAccountExistWithPassword(account.getLogin(),account.getPassword())).thenReturn(true);
+        boolean result = accountRepository.isAccountExistWithPassword(account.getLogin(), account.getPassword());
+        assertTrue(result);
+    }
 
-
+    @Test
+    public void isLoginInDb() {
+        when(queryHelper.isAccountInDb(TableSearcher.AccountByLogin, account.getLogin())).thenReturn(true);
+        boolean result = accountRepository.isLoginInDb(account.getLogin());
+        assertTrue(result);
+    }
 
 }

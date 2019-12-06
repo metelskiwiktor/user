@@ -4,9 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.wiktor.management.user.entity.Account;
-import pl.wiktor.management.user.entity.enums.TableSearcher;
 import pl.wiktor.management.user.exception.AccountException;
+import pl.wiktor.management.user.model.dto.response.AccountDTO;
+import pl.wiktor.management.user.model.entity.Account;
+import pl.wiktor.management.user.model.enums.TableSearcher;
+import pl.wiktor.management.user.model.mapper.Mapper;
 import pl.wiktor.management.user.repository.AccountRepository;
 import pl.wiktor.management.user.repository.ActiveUserRepository;
 
@@ -22,7 +24,8 @@ public class AccountService {
         this.activeUserRepository = activeUserRepository;
     }
 
-    public boolean register(Account account){
+    public boolean register(AccountDTO accountDTO){
+        Account account = Mapper.map(accountDTO);
         try{
             accountRepository.addAccount(account);
             logger.info("Account successful registered");

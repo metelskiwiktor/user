@@ -4,10 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.wiktor.management.user.entity.Account;
-import pl.wiktor.management.user.entity.enums.TableSearcher;
+import pl.wiktor.management.user.model.dto.response.AccountDTO;
+import pl.wiktor.management.user.model.entity.Account;
+import pl.wiktor.management.user.model.enums.TableSearcher;
 import pl.wiktor.management.user.exception.AccountLoginException;
 import pl.wiktor.management.user.exception.AccountPasswordException;
+import pl.wiktor.management.user.model.mapper.Mapper;
 import pl.wiktor.management.user.repository.AccountRepository;
 import pl.wiktor.management.user.repository.ActiveUserRepository;
 
@@ -25,7 +27,8 @@ public class ActiveUserService {
         this.accountRepository = accountRepository;
     }
 
-    public String login(Account account) {
+    public String login(AccountDTO accountDTO) {
+        Account account = Mapper.map(accountDTO);
         String token = UUID.randomUUID().toString();
         try {
             loginIsInDb(account.getLogin());
@@ -39,7 +42,6 @@ public class ActiveUserService {
         return null;
     }
 
-    // TODO: 05.12.2019 @RestControllerAdvice
     public void logout(String token){
         if(activeUserRepository.isAccountLoggedIn(TableSearcher.ActiveAccountByToken, token)){
             activeUserRepository.logout(token);
@@ -56,7 +58,7 @@ public class ActiveUserService {
     }
 
     private void loginAndPasswordCorrect(Account account) throws AccountPasswordException{
-        if( !accountRepository.isAccountExistWithPassword(account.getLogin(), account.getPassword()) ){
+        if( !accountRepository.isAccountExistWithPassword(account.getLogin(), account.getPassword())){
             throw new AccountPasswordException("Password doesn't match");
         }
     }
