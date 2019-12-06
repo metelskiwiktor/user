@@ -1,4 +1,4 @@
-package pl.wiktor.management.user.entity;
+package pl.wiktor.management.user.model.entity;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -39,6 +39,14 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override
