@@ -11,7 +11,7 @@ import pl.wiktor.management.user.exception.AccountLoginException;
 import pl.wiktor.management.user.model.dto.response.AccountDTO;
 import pl.wiktor.management.user.model.entity.Account;
 import pl.wiktor.management.user.model.enums.TableSearcher;
-import pl.wiktor.management.user.repository.AccountRepository;
+import pl.wiktor.management.user.repository.AccountRepositoryImpl;
 import pl.wiktor.management.user.repository.ActiveUserRepository;
 
 import static org.junit.Assert.assertFalse;
@@ -23,7 +23,7 @@ import static org.mockito.Mockito.*;
 public class AccountServiceTest {
 
     @Mock
-    private AccountRepository accountRepository;
+    private AccountRepositoryImpl accountRepository;
 
     @Mock
     private ActiveUserRepository activeUserRepository;

@@ -9,17 +9,17 @@ import pl.wiktor.management.user.model.dto.response.AccountDTO;
 import pl.wiktor.management.user.model.entity.Account;
 import pl.wiktor.management.user.model.enums.TableSearcher;
 import pl.wiktor.management.user.model.mapper.Mapper;
-import pl.wiktor.management.user.repository.AccountRepository;
+import pl.wiktor.management.user.repository.AccountRepositoryImpl;
 import pl.wiktor.management.user.repository.ActiveUserRepository;
 
 @Service
 public class AccountService {
-    private AccountRepository accountRepository;
+    private AccountRepositoryImpl accountRepository;
     private ActiveUserRepository activeUserRepository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, ActiveUserRepository activeUserRepository) {
+    public AccountService(AccountRepositoryImpl accountRepository, ActiveUserRepository activeUserRepository) {
         this.accountRepository = accountRepository;
         this.activeUserRepository = activeUserRepository;
     }

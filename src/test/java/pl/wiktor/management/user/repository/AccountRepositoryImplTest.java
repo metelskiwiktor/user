@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AccountRepositoryTest {
+public class AccountRepositoryImplTest {
     @Mock
     private EntityManager entityManager;
 
@@ -27,7 +27,7 @@ public class AccountRepositoryTest {
 
     @Spy
     @InjectMocks
-    private AccountRepository accountRepository;
+    private AccountRepositoryImpl accountRepository;
 
     private Account account;
 

@@ -9,7 +9,7 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import pl.wiktor.management.user.exception.AccountLoginException;
 import pl.wiktor.management.user.model.dto.response.AccountDTO;
-import pl.wiktor.management.user.repository.AccountRepository;
+import pl.wiktor.management.user.repository.AccountRepositoryImpl;
 import pl.wiktor.management.user.repository.ActiveUserRepository;
 
 import java.util.UUID;
@@ -26,7 +26,7 @@ public class ActiveUserServiceTest {
     private ActiveUserRepository activeUserRepository;
 
     @Mock
-    private AccountRepository accountRepository;
+    private AccountRepositoryImpl accountRepository;
 
     @InjectMocks
     @Spy

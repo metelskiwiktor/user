@@ -11,12 +11,12 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 @Repository
-public class AccountRepository {
+public class AccountRepositoryImpl {
     private EntityManager entityManager;
     private QueryHelper queryHelper;
 
     @Autowired
-    public AccountRepository(EntityManager entityManager, QueryHelper queryHelper) {
+    public AccountRepositoryImpl(EntityManager entityManager, QueryHelper queryHelper) {
         this.entityManager = entityManager;
         this.queryHelper = queryHelper;
     }

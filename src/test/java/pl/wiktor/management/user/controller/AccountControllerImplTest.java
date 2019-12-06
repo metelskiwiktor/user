@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+import pl.wiktor.management.user.controller.impl.AccountControllerImpl;
 import pl.wiktor.management.user.model.dto.request.AccountPasswordDTO;
 import pl.wiktor.management.user.model.dto.response.AccountDTO;
 import pl.wiktor.management.user.service.AccountService;
@@ -16,7 +17,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AccountControllerTest {
+public class AccountControllerImplTest {
     @Mock
     private AccountService accountService;
 
@@ -25,7 +26,7 @@ public class AccountControllerTest {
 
     @InjectMocks
     @Spy
-    private AccountController accountController;
+    private AccountControllerImpl accountController;
 
 
     private AccountDTO accountDTO;
