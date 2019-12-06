@@ -1,4 +1,4 @@
-package pl.wiktor.management.user.repository;
+package pl.wiktor.management.user.repository.impl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +13,7 @@ import pl.wiktor.management.user.helper.QueryHelper;
 import pl.wiktor.management.user.model.entity.Account;
 import pl.wiktor.management.user.model.entity.ActiveAccount;
 import pl.wiktor.management.user.model.enums.TableSearcher;
+import pl.wiktor.management.user.repository.impl.ActiveUserRepositoryImpl;
 
 import javax.persistence.EntityManager;
 
@@ -20,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ActiveUserRepositoryTest {
+public class ActiveUserRepositoryImplTest {
 
     @Mock
     private EntityManager entityManager;
@@ -30,7 +31,7 @@ public class ActiveUserRepositoryTest {
 
     @Spy
     @InjectMocks
-    private ActiveUserRepository activeUserRepository;
+    private ActiveUserRepositoryImpl activeUserRepository;
 
     private Account account;
 

@@ -1,7 +1,7 @@
 package pl.wiktor.management.user.controller;
 
 import pl.wiktor.management.user.model.dto.request.AccountPasswordDTO;
-import pl.wiktor.management.user.model.dto.response.AccountDTO;
+import pl.wiktor.management.user.model.dto.request.AccountDTO;
 
 public interface AccountController {
     boolean register(AccountDTO accountDTO);

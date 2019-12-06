@@ -1,4 +1,4 @@
-package pl.wiktor.management.user.service;
+package pl.wiktor.management.user.service.impl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,9 +8,10 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import pl.wiktor.management.user.exception.AccountLoginException;
-import pl.wiktor.management.user.model.dto.response.AccountDTO;
-import pl.wiktor.management.user.repository.AccountRepositoryImpl;
-import pl.wiktor.management.user.repository.ActiveUserRepository;
+import pl.wiktor.management.user.model.dto.request.AccountDTO;
+import pl.wiktor.management.user.repository.impl.AccountRepositoryImpl;
+import pl.wiktor.management.user.repository.impl.ActiveUserRepositoryImpl;
+import pl.wiktor.management.user.service.impl.ActiveUserServiceImpl;
 
 import java.util.UUID;
 
@@ -20,17 +21,17 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ActiveUserServiceTest {
+public class ActiveUserServiceImplTest {
 
     @Mock
-    private ActiveUserRepository activeUserRepository;
+    private ActiveUserRepositoryImpl activeUserRepository;
 
     @Mock
     private AccountRepositoryImpl accountRepository;
 
     @InjectMocks
     @Spy
-    private ActiveUserService activeUserService;
+    private ActiveUserServiceImpl activeUserService;
 
     private AccountDTO accountDTO;
 

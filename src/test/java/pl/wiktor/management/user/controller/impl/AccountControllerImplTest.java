@@ -1,4 +1,4 @@
-package pl.wiktor.management.user.controller;
+package pl.wiktor.management.user.controller.impl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -9,9 +9,9 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import pl.wiktor.management.user.controller.impl.AccountControllerImpl;
 import pl.wiktor.management.user.model.dto.request.AccountPasswordDTO;
-import pl.wiktor.management.user.model.dto.response.AccountDTO;
-import pl.wiktor.management.user.service.AccountService;
-import pl.wiktor.management.user.service.ActiveUserService;
+import pl.wiktor.management.user.model.dto.request.AccountDTO;
+import pl.wiktor.management.user.service.impl.AccountServiceImpl;
+import pl.wiktor.management.user.service.impl.ActiveUserServiceImpl;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -19,10 +19,10 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class AccountControllerImplTest {
     @Mock
-    private AccountService accountService;
+    private AccountServiceImpl accountService;
 
     @Mock
-    private ActiveUserService activeUserService;
+    private ActiveUserServiceImpl activeUserService;
 
     @InjectMocks
     @Spy

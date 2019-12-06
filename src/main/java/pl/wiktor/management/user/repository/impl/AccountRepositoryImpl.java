@@ -1,4 +1,4 @@
-package pl.wiktor.management.user.repository;
+package pl.wiktor.management.user.repository.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -6,12 +6,13 @@ import pl.wiktor.management.user.model.entity.Account;
 import pl.wiktor.management.user.model.enums.TableSearcher;
 import pl.wiktor.management.user.exception.AccountLoginException;
 import pl.wiktor.management.user.helper.QueryHelper;
+import pl.wiktor.management.user.repository.AccountRepository;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 @Repository
-public class AccountRepositoryImpl {
+public class AccountRepositoryImpl implements AccountRepository {
     private EntityManager entityManager;
     private QueryHelper queryHelper;
 

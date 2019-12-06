@@ -1,4 +1,4 @@
-package pl.wiktor.management.user.model.dto.response;
+package pl.wiktor.management.user.model.dto.request;
 
 public class AccountDTO {
     private int id;

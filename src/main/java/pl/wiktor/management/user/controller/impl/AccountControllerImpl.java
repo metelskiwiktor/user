@@ -4,9 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.wiktor.management.user.controller.AccountController;
 import pl.wiktor.management.user.model.dto.request.AccountPasswordDTO;
-import pl.wiktor.management.user.model.dto.response.AccountDTO;
+import pl.wiktor.management.user.model.dto.request.AccountDTO;
 import pl.wiktor.management.user.service.AccountService;
 import pl.wiktor.management.user.service.ActiveUserService;
+import pl.wiktor.management.user.service.impl.AccountServiceImpl;
+import pl.wiktor.management.user.service.impl.ActiveUserServiceImpl;
 
 @RestController()
 @RequestMapping("/")

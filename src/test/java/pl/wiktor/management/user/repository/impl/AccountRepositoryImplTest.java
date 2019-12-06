@@ -1,4 +1,4 @@
-package pl.wiktor.management.user.repository;
+package pl.wiktor.management.user.repository.impl;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +11,7 @@ import pl.wiktor.management.user.exception.AccountLoginException;
 import pl.wiktor.management.user.helper.QueryHelper;
 import pl.wiktor.management.user.model.entity.Account;
 import pl.wiktor.management.user.model.enums.TableSearcher;
+import pl.wiktor.management.user.repository.impl.AccountRepositoryImpl;
 
 import javax.persistence.EntityManager;
 
