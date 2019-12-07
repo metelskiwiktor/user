@@ -1,10 +1,10 @@
 package pl.wiktor.management.user.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import pl.wiktor.management.user.model.entity.Account;
 
-public interface AccountRepository {
-    void addAccount(Account account);
-    void changePassword(String token, String newPassword);
-    boolean isAccountExistWithPassword(String login, String password);
-    boolean isLoginInDb(String login);
+public interface AccountRepository extends JpaRepository<Account, Integer> {
+    boolean existsAccountByLogin(String login);
+    Account getAccountByLogin(String login);
+    boolean existsAccountByLoginAndPassword(String login, String password);
 }

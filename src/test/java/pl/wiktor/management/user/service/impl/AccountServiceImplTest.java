@@ -10,9 +10,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import pl.wiktor.management.user.exception.AccountLoginException;
 import pl.wiktor.management.user.model.dto.request.AccountDTO;
 import pl.wiktor.management.user.model.entity.Account;
-import pl.wiktor.management.user.model.enums.TableSearcher;
-import pl.wiktor.management.user.repository.impl.AccountRepositoryImpl;
-import pl.wiktor.management.user.repository.impl.ActiveUserRepositoryImpl;
+import pl.wiktor.management.user.model.entity.ActiveAccount;
+import pl.wiktor.management.user.repository.AccountRepository;
+import pl.wiktor.management.user.repository.ActiveUserRepository;
 import pl.wiktor.management.user.service.impl.AccountServiceImpl;
 
 import static org.junit.Assert.assertFalse;
@@ -24,10 +24,10 @@ import static org.mockito.Mockito.*;
 public class AccountServiceImplTest {
 
     @Mock
-    private AccountRepositoryImpl accountRepository;
+    private AccountRepository accountRepository;
 
     @Mock
-    private ActiveUserRepositoryImpl activeUserRepository;
+    private ActiveUserRepository activeUserRepository;
 
     @InjectMocks
     @Spy
@@ -45,25 +45,29 @@ public class AccountServiceImplTest {
 
     @Test
     public void register() throws AccountLoginException {
-        doNothing().when(accountRepository).addAccount(any(Account.class));
+        when(activeUserRepository.existsActiveAccountByLogin(any())).thenReturn(false);
+        when(accountRepository.save(any())).thenReturn(null);
         final boolean result = accountService.register(accountDTO);
         assertTrue(result);
     }
 
     @Test
     public void registerShouldThrowException() throws AccountLoginException {
-        doThrow(new AccountLoginException("")).when(accountRepository).addAccount(any(Account.class));
+        when(activeUserRepository.existsActiveAccountByLogin(any())).thenReturn(true);
         final boolean result = accountService.register(accountDTO);
         assertFalse(result);
     }
-
+//
     @Test
     public void changePassword() {
+        Account account = new Account("wiktor","haslo");
         String token = "token";
         String newPassword = "nowehaslo";
-        when(activeUserRepository.isAccountLoggedIn(any(TableSearcher.class), anyString())).thenReturn(true);
-        doNothing().when(accountRepository).changePassword(eq(token), eq(newPassword));
+        when(activeUserRepository.existsActiveAccountByToken(token)).thenReturn(true);
+        when(activeUserRepository.getActiveAccountByToken(token)).thenReturn(new ActiveAccount("wiktor",token));
+        when(accountRepository.getAccountByLogin(accountDTO.getLogin())).thenReturn(account);
+        when(accountRepository.save(account)).thenReturn(null);
         accountService.changePassword(token, newPassword);
-        verify(accountRepository, times(1)).changePassword(eq(token), eq(newPassword));
+        verify(accountRepository, times(1)).save(account);
     }
 }
