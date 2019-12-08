@@ -1,9 +1,11 @@
 package pl.wiktor.management.user.repository;
 
-import pl.wiktor.management.user.model.enums.TableSearcher;
+import org.springframework.data.jpa.repository.JpaRepository;
+import pl.wiktor.management.user.model.entity.ActiveAccount;
 
-public interface ActiveUserRepository {
-    void login(String login, String token);
-    void logout(String token);
-    boolean isAccountLoggedIn(TableSearcher tableSearcher, String fieldValue);
+public interface ActiveUserRepository extends JpaRepository<ActiveAccount, Integer> {
+    ActiveAccount getActiveAccountByToken(String token);
+    boolean existsActiveAccountByToken(String token);
+    boolean existsActiveAccountByLogin(String login);
+    void deleteActiveAccountByToken(String token);
 }
