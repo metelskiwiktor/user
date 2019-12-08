@@ -17,6 +17,8 @@ import pl.wiktor.management.user.service.ActiveUserService;
 import javax.transaction.Transactional;
 import java.util.UUID;
 
+
+@Transactional
 @Service
 public class ActiveUserServiceImpl implements ActiveUserService {
     private ActiveUserRepository activeUserRepository;
@@ -44,7 +46,6 @@ public class ActiveUserServiceImpl implements ActiveUserService {
         return null;
     }
 
-    @Transactional
     public void logout(String token){
         if(activeUserRepository.existsActiveAccountByToken(token)){
             activeUserRepository.deleteActiveAccountByToken(token);

@@ -38,7 +38,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public void isAccountAlreadyRegistered(String login){
-        if(activeUserRepository.existsActiveAccountByLogin(login)){
+        if(accountRepository.existsAccountByLogin(login)){
             throw new AccountLoginException("Account already registered");
         }
     }
