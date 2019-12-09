@@ -1,21 +1,12 @@
 package pl.wiktor.management.user.repository;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.internal.runners.JUnit4ClassRunner;
 import org.junit.runner.RunWith;
-import org.junit.runners.BlockJUnit4ClassRunner;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import pl.wiktor.management.user.model.entity.Account;
-
-import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
@@ -27,7 +18,7 @@ public class AccountRepositoryTest {
     private static final String INVALID_PASSWORD = "InvalidPassword";
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountRepositoryJpa accountRepository;
 
     private Account account;
 

@@ -4,7 +4,7 @@ import pl.wiktor.management.user.model.dto.request.AccountPasswordDTO;
 import pl.wiktor.management.user.model.dto.request.AccountDTO;
 
 public interface AccountController {
-    boolean register(AccountDTO accountDTO);
+    void register(AccountDTO accountDTO);
     String login(AccountDTO accountDTO);
     void logout(String token);
     void changePassword(String token, AccountPasswordDTO accountPasswordDTO);

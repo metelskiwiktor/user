@@ -10,8 +10,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import pl.wiktor.management.user.model.dto.request.AccountDTO;
 import pl.wiktor.management.user.model.entity.Account;
 import pl.wiktor.management.user.model.entity.ActiveAccount;
-import pl.wiktor.management.user.repository.AccountRepository;
-import pl.wiktor.management.user.repository.ActiveUserRepository;
+import pl.wiktor.management.user.repository.AccountRepositoryJpa;
+import pl.wiktor.management.user.repository.ActiveUserRepositoryJpa;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -22,10 +22,10 @@ import static org.mockito.Mockito.*;
 public class AccountServiceImplTest {
 
     @Mock
-    private AccountRepository accountRepository;
+    private AccountRepositoryJpa accountRepository;
 
     @Mock
-    private ActiveUserRepository activeUserRepository;
+    private ActiveUserRepositoryJpa activeUserRepository;
 
     @InjectMocks
     @Spy

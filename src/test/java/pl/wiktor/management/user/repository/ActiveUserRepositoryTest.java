@@ -17,7 +17,7 @@ public class ActiveUserRepositoryTest {
     private static final String INVALID_LOGIN = "InvalidLogin";
 
     @Autowired
-    private ActiveUserRepository activeUserRepository;
+    private ActiveUserRepositoryJpa activeUserRepository;
 
     private ActiveAccount activeAccount;
 

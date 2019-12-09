@@ -3,12 +3,10 @@ package pl.wiktor.management.user.controller.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.wiktor.management.user.controller.AccountController;
-import pl.wiktor.management.user.model.dto.request.AccountPasswordDTO;
 import pl.wiktor.management.user.model.dto.request.AccountDTO;
+import pl.wiktor.management.user.model.dto.request.AccountPasswordDTO;
 import pl.wiktor.management.user.service.AccountService;
 import pl.wiktor.management.user.service.ActiveUserService;
-import pl.wiktor.management.user.service.impl.AccountServiceImpl;
-import pl.wiktor.management.user.service.impl.ActiveUserServiceImpl;
 
 @RestController()
 @RequestMapping("/")
@@ -29,8 +27,8 @@ public class AccountControllerImpl implements AccountController {
     }
 
     @PostMapping(value = register, consumes = "application/json")
-    public boolean register(@RequestBody AccountDTO accountDTO) {
-        return accountService.register(accountDTO);
+    public void register(@RequestBody AccountDTO accountDTO) {
+        accountService.register(accountDTO);
     }
 
     @PostMapping(value = login, consumes = "application/json")
