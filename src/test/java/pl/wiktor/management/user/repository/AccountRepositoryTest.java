@@ -23,10 +23,6 @@ public class AccountRepositoryTest {
     private Account account;
 
 
-//    boolean existsAccountByLogin(String login);
-//    Account getAccountByLogin(String login);
-//    boolean existsAccountByLoginAndPassword(String login, String password);
-
     @Before
     public void setUp() {
         account = new Account("wiktor","haslo");
@@ -34,28 +30,28 @@ public class AccountRepositoryTest {
 
     }
 
-//    @Test
-//    public void existsAccountByLogin(){
-//        boolean shouldBeTrue = accountRepository.existsAccountByLogin(account.getLogin());
-//        boolean shouldBeFalse = accountRepository.existsAccountByLogin(INVALID_LOGIN);
-//
-//        assertTrue(shouldBeTrue);
-//        assertFalse(shouldBeFalse);
-//    }
-//
-//    @Test
-//    public void getAccountByLogin(){
-//        Account accountResult = accountRepository.getAccountByLogin(this.account.getLogin());
-//
-//        assertEquals(this.account, accountResult);
-//    }
-//
-//    @Test
-//    public void existsAccountByLoginAndPassword(){
-//        boolean shouldBeTrue = accountRepository.existsAccountByLoginAndPassword(account.getLogin(), account.getPassword());
-//        boolean shouldBeFalse = accountRepository.existsAccountByLoginAndPassword(INVALID_LOGIN, INVALID_PASSWORD);
-//
-//        assertTrue(shouldBeTrue);
-//        assertFalse(shouldBeFalse);
-//    }
+    @Test
+    public void existsAccountByLogin(){
+        boolean shouldBeTrue = accountRepository.existsAccountByLogin(account.getLogin()).get();
+        boolean shouldBeFalse = accountRepository.existsAccountByLogin(INVALID_LOGIN).get();
+
+        assertTrue(shouldBeTrue);
+        assertFalse(shouldBeFalse);
+    }
+
+    @Test
+    public void getAccountByLogin(){
+        Account accountResult = accountRepository.getAccountByLogin(this.account.getLogin());
+
+        assertEquals(this.account, accountResult);
+    }
+
+    @Test
+    public void existsAccountByLoginAndPassword(){
+        boolean shouldBeTrue = accountRepository.existsAccountByLoginAndPassword(account.getLogin(), account.getPassword()).get();
+        boolean shouldBeFalse = accountRepository.existsAccountByLoginAndPassword(INVALID_LOGIN, INVALID_PASSWORD).get();
+
+        assertTrue(shouldBeTrue);
+        assertFalse(shouldBeFalse);
+    }
 }

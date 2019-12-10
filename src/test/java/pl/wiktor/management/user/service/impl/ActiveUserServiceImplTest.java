@@ -18,7 +18,6 @@ import pl.wiktor.management.user.repository.ActiveUserRepositoryJpa;
 import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -86,8 +85,6 @@ public class ActiveUserServiceImplTest {
     public void logoutWithBadCredentials(){
         String token = "token";
         when(activeUserRepository.existsActiveAccountByToken(token)).thenReturn(Optional.of(false));
-
-        activeUserService.logout(token);
 
         Assertions.assertThrows(AccountInvalidTokenException.class, () -> activeUserService.logout(token));
     }

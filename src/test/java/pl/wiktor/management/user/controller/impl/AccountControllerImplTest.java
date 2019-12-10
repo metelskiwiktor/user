@@ -7,15 +7,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import pl.wiktor.management.user.controller.impl.AccountControllerImpl;
-import pl.wiktor.management.user.model.dto.request.AccountPasswordDTO;
 import pl.wiktor.management.user.model.dto.request.AccountDTO;
+import pl.wiktor.management.user.model.dto.request.AccountPasswordDTO;
 import pl.wiktor.management.user.service.impl.AccountServiceImpl;
 import pl.wiktor.management.user.service.impl.ActiveUserServiceImpl;
 
-import java.util.Objects;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)

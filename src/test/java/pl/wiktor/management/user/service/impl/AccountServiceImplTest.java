@@ -1,6 +1,5 @@
 package pl.wiktor.management.user.service.impl;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -19,8 +18,6 @@ import pl.wiktor.management.user.repository.ActiveUserRepositoryJpa;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -49,7 +46,6 @@ public class AccountServiceImplTest {
 
     @Test
     public void accountSuccessfulRegistered() {
-        Optional<Boolean> aBoolean = Optional.of(false);
         when(accountRepository.existsAccountByLogin(any())).thenReturn(Optional.of(false));
         when(accountRepository.save(any())).thenReturn(null);
 

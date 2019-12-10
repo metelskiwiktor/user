@@ -35,23 +35,23 @@ public class ActiveUserRepositoryTest {
         assertEquals(activeAccount.getToken(), activeAccountResult.getToken());
     }
 //
-//    @Test
-//    public void existsActiveAccountByToken(){
-//        boolean shouldBeTrue = activeUserRepository.existsActiveAccountByToken(activeAccount.getToken());
-//        boolean shouldBeFalse = activeUserRepository.existsActiveAccountByToken(INVALID_TOKEN);
+    @Test
+    public void existsActiveAccountByToken(){
+        boolean shouldBeTrue = activeUserRepository.existsActiveAccountByToken(activeAccount.getToken()).get();
+        boolean shouldBeFalse = activeUserRepository.existsActiveAccountByToken(INVALID_TOKEN).get();
+
+        assertTrue(shouldBeTrue);
+        assertFalse(shouldBeFalse);
+    }
 //
-//        assertTrue(shouldBeTrue);
-//        assertFalse(shouldBeFalse);
-//    }
-//
-//    @Test
-//    public void existsActiveAccountByLogin(){
-//        boolean shouldBeTrue = activeUserRepository.existsActiveAccountByLogin(activeAccount.getLogin());
-//        boolean shouldBeFalse = activeUserRepository.existsActiveAccountByLogin(INVALID_LOGIN);
-//
-//        assertTrue(shouldBeTrue);
-//        assertFalse(shouldBeFalse);
-//    }
+    @Test
+    public void existsActiveAccountByLogin(){
+        boolean shouldBeTrue = activeUserRepository.existsActiveAccountByLogin(activeAccount.getLogin()).get();
+        boolean shouldBeFalse = activeUserRepository.existsActiveAccountByLogin(INVALID_LOGIN).get();
+
+        assertTrue(shouldBeTrue);
+        assertFalse(shouldBeFalse);
+    }
 
     @Test
     public void deleteActiveAccountByToken(){
