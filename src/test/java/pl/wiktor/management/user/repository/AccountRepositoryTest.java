@@ -34,28 +34,28 @@ public class AccountRepositoryTest {
 
     }
 
-    @Test
-    public void existsAccountByLogin(){
-        boolean shouldBeTrue = accountRepository.existsAccountByLogin(account.getLogin());
-        boolean shouldBeFalse = accountRepository.existsAccountByLogin(INVALID_LOGIN);
-
-        assertTrue(shouldBeTrue);
-        assertFalse(shouldBeFalse);
-    }
-
-    @Test
-    public void getAccountByLogin(){
-        Account accountResult = accountRepository.getAccountByLogin(this.account.getLogin());
-
-        assertEquals(this.account, accountResult);
-    }
-
-    @Test
-    public void existsAccountByLoginAndPassword(){
-        boolean shouldBeTrue = accountRepository.existsAccountByLoginAndPassword(account.getLogin(), account.getPassword());
-        boolean shouldBeFalse = accountRepository.existsAccountByLoginAndPassword(INVALID_LOGIN, INVALID_PASSWORD);
-
-        assertTrue(shouldBeTrue);
-        assertFalse(shouldBeFalse);
-    }
+//    @Test
+//    public void existsAccountByLogin(){
+//        boolean shouldBeTrue = accountRepository.existsAccountByLogin(account.getLogin());
+//        boolean shouldBeFalse = accountRepository.existsAccountByLogin(INVALID_LOGIN);
+//
+//        assertTrue(shouldBeTrue);
+//        assertFalse(shouldBeFalse);
+//    }
+//
+//    @Test
+//    public void getAccountByLogin(){
+//        Account accountResult = accountRepository.getAccountByLogin(this.account.getLogin());
+//
+//        assertEquals(this.account, accountResult);
+//    }
+//
+//    @Test
+//    public void existsAccountByLoginAndPassword(){
+//        boolean shouldBeTrue = accountRepository.existsAccountByLoginAndPassword(account.getLogin(), account.getPassword());
+//        boolean shouldBeFalse = accountRepository.existsAccountByLoginAndPassword(INVALID_LOGIN, INVALID_PASSWORD);
+//
+//        assertTrue(shouldBeTrue);
+//        assertFalse(shouldBeFalse);
+//    }
 }

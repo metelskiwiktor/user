@@ -1,17 +1,23 @@
 package pl.wiktor.management.user.service.impl;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+import pl.wiktor.management.user.exception.AccountAlreadyRegisteredException;
+import pl.wiktor.management.user.exception.AccountInvalidTokenException;
 import pl.wiktor.management.user.model.dto.request.AccountDTO;
 import pl.wiktor.management.user.model.entity.Account;
 import pl.wiktor.management.user.model.entity.ActiveAccount;
 import pl.wiktor.management.user.repository.AccountRepositoryJpa;
 import pl.wiktor.management.user.repository.ActiveUserRepositoryJpa;
+
+import java.util.Optional;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -43,21 +49,20 @@ public class AccountServiceImplTest {
 
     @Test
     public void accountSuccessfulRegistered() {
-        when(accountRepository.existsAccountByLogin(any())).thenReturn(false);
+        Optional<Boolean> aBoolean = Optional.of(false);
+        when(accountRepository.existsAccountByLogin(any())).thenReturn(Optional.of(false));
         when(accountRepository.save(any())).thenReturn(null);
 
-        boolean result = accountService.register(accountDTO);
+        accountService.register(accountDTO);
 
-        assertTrue(result);
+        verify(accountRepository, times(1)).existsAccountByLogin(any());
     }
 
     @Test
     public void accountAlreadyRegistered() {
-        when(accountRepository.existsAccountByLogin(any())).thenReturn(true);
+        when(accountRepository.existsAccountByLogin(any())).thenReturn(Optional.of(true));
 
-        boolean result = accountService.register(accountDTO);
-
-        assertFalse(result);
+        Assertions.assertThrows(AccountAlreadyRegisteredException.class, () -> accountService.register(accountDTO));
     }
 
     @Test
@@ -67,7 +72,7 @@ public class AccountServiceImplTest {
         String token = "token";
         String newPassword = "nowehaslo";
 
-        when(activeUserRepository.existsActiveAccountByToken(token)).thenReturn(true);
+        when(activeUserRepository.existsActiveAccountByToken(token)).thenReturn(Optional.of(true));
         when(activeUserRepository.getActiveAccountByToken(token)).thenReturn(new ActiveAccount("wiktor",token));
         when(accountRepository.getAccountByLogin(accountDTO.getLogin())).thenReturn(account);
         when(accountRepository.save(account)).thenReturn(null);
@@ -82,10 +87,8 @@ public class AccountServiceImplTest {
         String token = "token";
         String newPassword = "noweHaslo";
 
-        when(activeUserRepository.existsActiveAccountByToken(token)).thenReturn(false);
+        when(activeUserRepository.existsActiveAccountByToken(token)).thenReturn(Optional.of(false));
 
-        accountService.changePassword(token, newPassword);
-
-        verify(accountRepository, times(0)).save(any());
+        Assertions.assertThrows(AccountInvalidTokenException.class, () -> accountService.changePassword(token, newPassword));
     }
 }
