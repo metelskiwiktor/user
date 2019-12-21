@@ -2,17 +2,22 @@ package pl.wiktor.management.user.service.impl;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
+import pl.wiktor.management.user.exception.AccountInvalidLoginException;
+import pl.wiktor.management.user.exception.AccountInvalidPasswordException;
+import pl.wiktor.management.user.exception.AccountInvalidTokenException;
 import pl.wiktor.management.user.model.dto.request.AccountDTO;
-import pl.wiktor.management.user.repository.AccountRepository;
-import pl.wiktor.management.user.repository.ActiveUserRepository;
+import pl.wiktor.management.user.repository.AccountRepositoryJpa;
+import pl.wiktor.management.user.repository.ActiveUserRepositoryJpa;
+
+import java.util.Optional;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -21,10 +26,10 @@ import static org.mockito.Mockito.*;
 public class ActiveUserServiceImplTest {
 
     @Mock
-    private ActiveUserRepository activeUserRepository;
+    private ActiveUserRepositoryJpa activeUserRepository;
 
     @Mock
-    private AccountRepository accountRepository;
+    private AccountRepositoryJpa accountRepository;
 
     @InjectMocks
     @Spy
@@ -42,8 +47,8 @@ public class ActiveUserServiceImplTest {
 
     @Test
     public void accountSuccessfulLoggedIn(){
-        when(accountRepository.existsAccountByLogin(anyString())).thenReturn(true);
-        when(accountRepository.existsAccountByLoginAndPassword(any(), any())).thenReturn(true);
+        when(accountRepository.existsAccountByLogin(anyString())).thenReturn(Optional.of(true));
+        when(accountRepository.existsAccountByLoginAndPassword(any(), any())).thenReturn(Optional.of(true));
         when(activeUserRepository.save(any())).thenReturn(null);
 
         String token = activeUserService.login(accountDTO);
@@ -54,24 +59,21 @@ public class ActiveUserServiceImplTest {
 
     @Test
     public void accountLoginDenied(){
-        when(accountRepository.existsAccountByLogin(anyString())).thenReturn(false);
-        String token = activeUserService.login(accountDTO);
-        assertNull(token);
-        verify(activeUserRepository, times(0)).save(any());
+        when(accountRepository.existsAccountByLogin(anyString())).thenReturn(Optional.of(false));
 
-        when(accountRepository.existsAccountByLogin(anyString())).thenReturn(true);
-        when(accountRepository.existsAccountByLoginAndPassword(any(), any())).thenReturn(false);
+        Assertions.assertThrows(AccountInvalidLoginException.class, () -> activeUserService.login(accountDTO));
 
-        token = activeUserService.login(accountDTO);
-        assertNull(token);
-        verify(activeUserRepository, times(0)).save(any());
+
+        when(accountRepository.existsAccountByLogin(anyString())).thenReturn(Optional.of(true));
+        when(accountRepository.existsAccountByLoginAndPassword(any(), any())).thenReturn(Optional.of(false));
+
+        Assertions.assertThrows(AccountInvalidPasswordException.class, () -> activeUserService.login(accountDTO));
     }
-
 
     @Test
     public void accountLoggedOut(){
         String token = "token";
-        when(activeUserRepository.existsActiveAccountByToken(token)).thenReturn(true);
+        when(activeUserRepository.existsActiveAccountByToken(token)).thenReturn(Optional.of(true));
         doNothing().when(activeUserRepository).deleteActiveAccountByToken(token);
 
         activeUserService.logout(token);
@@ -82,10 +84,8 @@ public class ActiveUserServiceImplTest {
     @Test
     public void logoutWithBadCredentials(){
         String token = "token";
-        when(activeUserRepository.existsActiveAccountByToken(token)).thenReturn(false);
+        when(activeUserRepository.existsActiveAccountByToken(token)).thenReturn(Optional.of(false));
 
-        activeUserService.logout(token);
-
-        verify(activeUserRepository, times(0)).deleteActiveAccountByToken(token);
+        Assertions.assertThrows(AccountInvalidTokenException.class, () -> activeUserService.logout(token));
     }
 }

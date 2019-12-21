@@ -3,9 +3,11 @@ package pl.wiktor.management.user.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import pl.wiktor.management.user.model.entity.ActiveAccount;
 
-public interface ActiveUserRepository extends JpaRepository<ActiveAccount, Integer> {
+import java.util.Optional;
+
+public interface ActiveUserRepositoryJpa extends JpaRepository<ActiveAccount, Integer> {
     ActiveAccount getActiveAccountByToken(String token);
-    boolean existsActiveAccountByToken(String token);
-    boolean existsActiveAccountByLogin(String login);
+    Optional<Boolean> existsActiveAccountByToken(String token);
+    Optional<Boolean>  existsActiveAccountByLogin(String login);
     void deleteActiveAccountByToken(String token);
 }

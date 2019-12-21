@@ -7,13 +7,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
-import pl.wiktor.management.user.controller.impl.AccountControllerImpl;
-import pl.wiktor.management.user.model.dto.request.AccountPasswordDTO;
 import pl.wiktor.management.user.model.dto.request.AccountDTO;
+import pl.wiktor.management.user.model.dto.request.AccountPasswordDTO;
 import pl.wiktor.management.user.service.impl.AccountServiceImpl;
 import pl.wiktor.management.user.service.impl.ActiveUserServiceImpl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -46,12 +45,9 @@ public class AccountControllerImplTest {
 
     @Test
     public void register() {
-        when(accountService.register(accountDTO)).thenReturn(true);
-        boolean register = accountController.register(accountDTO);
-        assertTrue(register);
-        when(accountService.register(accountDTO)).thenReturn(false);
-        register = accountController.register(accountDTO);
-        assertFalse(register);
+        doNothing().when(accountService).register(accountDTO);
+        accountController.register(accountDTO);
+        verify(accountService, times(1)).register(accountDTO);
     }
 
     @Test
